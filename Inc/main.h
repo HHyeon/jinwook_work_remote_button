@@ -67,9 +67,9 @@ void Error_Handler(void);
 #define NRF_IRQ_Pin GPIO_PIN_0
 #define NRF_IRQ_GPIO_Port GPIOB
 #define NRF_IRQ_EXTI_IRQn EXTI0_IRQn
-#define BTN_IN_Pin GPIO_PIN_1
+#define BTN_IN_Pin GPIO_PIN_10
 #define BTN_IN_GPIO_Port GPIOB
-#define PIN_OUT_Pin GPIO_PIN_2
+#define PIN_OUT_Pin GPIO_PIN_11
 #define PIN_OUT_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 

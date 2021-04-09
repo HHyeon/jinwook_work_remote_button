@@ -126,7 +126,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   }
 }
 
-//#define MASTER_TRANSFER_ROLE
+#define MASTER_TRANSFER_ROLE
 
 /* USER CODE END 0 */
 
