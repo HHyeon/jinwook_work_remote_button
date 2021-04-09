@@ -126,7 +126,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   }
 }
 
-#define MASTER_TRANSFER_ROLE
+//#define MASTER_TRANSFER_ROLE
 
 /* USER CODE END 0 */
 
@@ -234,6 +234,8 @@ int main(void)
         {
           nrf24_read_payload(radio_payload, PAYLOAD_LEN);
 //          printf("receive:%s\n", radio_payload);
+          
+          HAL_GPIO_WritePin(PIN_OUT_GPIO_Port, PIN_OUT_Pin, (GPIO_PinState)radio_payload[10]);
         }
         
         nrf24_clear_flags();
@@ -252,7 +254,7 @@ int main(void)
       
       nrf24_clear_flags();
       
-      
+      radio_payload[10] = HAL_GPIO_ReadPin(BTN_IN_GPIO_Port, BTN_IN_Pin);
       nrf_irq_pin_active = 0;
       nrf24_write_IT(radio_payload, PAYLOAD_LEN);
     }
@@ -284,10 +286,14 @@ int main(void)
           nrf24_read_payload(radio_payload,PAYLOAD_LEN);
           
           uint8_t temp[32];
-          for(uint8_t i=0;i<32;i++)
-          {
-            temp[i] = radio_payload[32-i-1];
-          }
+//          for(uint8_t i=0;i<32;i++)
+//          {
+//            temp[i] = radio_payload[32-i-1];
+//          }
+          
+          
+          HAL_GPIO_WritePin(PIN_OUT_GPIO_Port, PIN_OUT_Pin, (GPIO_PinState)radio_payload[10]);
+          temp[10] = HAL_GPIO_ReadPin(BTN_IN_GPIO_Port, BTN_IN_Pin);
           
           nrf24_ack_write_IT(temp, PAYLOAD_LEN,incoming_pipeno);
           radio_transferred_amount+=32;
@@ -397,7 +403,7 @@ static void MX_TIM4_Init(void)
   htim4.Instance = TIM4;
   htim4.Init.Prescaler = 7200;
   htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim4.Init.Period = 500;
+  htim4.Init.Period = 10000;
   htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
