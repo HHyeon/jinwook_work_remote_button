@@ -126,7 +126,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   }
 }
 
-#define MASTER_TRANSFER_ROLE
+//#define MASTER_TRANSFER_ROLE
 
 /* USER CODE END 0 */
 
@@ -208,6 +208,15 @@ int main(void)
              radio_transferred_amount - radio_transferred_amount_past,
              radio_dropped_amount - radio_dropped_amount_past);
       
+      if(radio_transferred_amount - radio_transferred_amount_past < 100)
+      {
+        HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_SET);
+      }
+      else
+      {
+        HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_RESET);
+      }
+      
       radio_transferred_amount_past = radio_transferred_amount;
       radio_dropped_amount_past = radio_dropped_amount;
       
@@ -267,6 +276,16 @@ int main(void)
       
       printf("\rRX:%5d\t",
              radio_transferred_amount - radio_transferred_amount_past);
+      
+      
+      if(radio_transferred_amount - radio_transferred_amount_past < 100)
+      {
+        HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_SET);
+      }
+      else
+      {
+        HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, GPIO_PIN_RESET);
+      }
       
       radio_transferred_amount_past = radio_transferred_amount;
     }
